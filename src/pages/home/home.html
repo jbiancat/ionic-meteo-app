@@ -1,18 +1,58 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="primary">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Home</ion-title>
+    <ion-title>Météo</ion-title>
   </ion-navbar>
+  <ion-toolbar color="secondary">
+    <ion-title text-center>{{city?.name}}</ion-title>
+  </ion-toolbar>
+  <ion-toolbar color="secondary">
+    <ion-title text-center>{{day?.date}}</ion-title>
+  </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-  <h3>Ionic Menu Starter</h3>
-
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
-
-  <button ion-button secondary menuToggle>Toggle Menu</button>
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <p>
+        Voir la meteo pour :
+      </p>
+      <ion-select [(ngModel)]="day" (ionChange)="dayChange($event)">
+        <ion-option *ngFor="let d of days" [value]="d">{{d.day_long}} {{d.date}}</ion-option>
+      </ion-select>
+    </ion-row>
+    <ion-row justify-content-center>
+      <h4>{{day?.day_long}}</h4>
+    </ion-row>
+    <ion-row justify-content-center>
+      <ion-col>
+        <p>Levé : {{city?.sunrise}}</p>
+      </ion-col>
+      <ion-col>
+        <p float-right>Couché : {{city?.sunset}}</p>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-item no-lines text-center>
+        <img [src]="day?.icon_big"/>
+      </ion-item>
+    </ion-row>
+    <ion-row justify-content-center>
+      <h5>{{day?.condition}}</h5>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-item no-lines>
+          <span ion-text color="primary">min {{day?.tmin}}</span>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item no-lines>
+          <span ion-text float-right color="danger">max {{day?.tmax}}</span>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
